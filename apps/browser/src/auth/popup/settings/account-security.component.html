@@ -123,9 +123,23 @@
       <bit-item>
         <button bit-item-content type="button" appStopClick routerLink="/device-management">
           {{ "devices" | i18n }}
-          <i slot="end" class="bwi bwi-chevron-right" aria-hidden="true"></i>
+          <bit-icon slot="end" name="bwi-angle-right" class="tw-text-lg"></bit-icon>
         </button>
       </bit-item>
+    </bit-section>
+
+    <bit-section *ngIf="phishingDetectionAvailable$ | async">
+      <bit-section-header>
+        <h2 bitTypography="h6">{{ "phishingBlocker" | i18n }}</h2>
+      </bit-section-header>
+      <bit-card>
+        <bit-switch formControlName="enablePhishingDetection" id="phishingDetectionAction">
+          <bit-label for="phishingDetectionAction">{{
+            "enablePhishingDetection" | i18n
+          }}</bit-label>
+          <bit-hint>{{ "enablePhishingDetectionDesc" | i18n }}</bit-hint>
+        </bit-switch>
+      </bit-card>
     </bit-section>
 
     <bit-section disableMargin>
@@ -140,13 +154,13 @@
       <bit-item>
         <button bit-item-content type="button" appStopClick (click)="twoStep()">
           {{ "twoStepLogin" | i18n }}
-          <i slot="end" class="bwi bwi-external-link" aria-hidden="true"></i>
+          <bit-icon slot="end" name="bwi-external-link"></bit-icon>
         </button>
       </bit-item>
       <bit-item *ngIf="showChangeMasterPass">
         <button bit-item-content type="button" appStopClick (click)="changePassword()">
           {{ "changeMasterPassword" | i18n }}
-          <i slot="end" class="bwi bwi-external-link" aria-hidden="true"></i>
+          <bit-icon slot="end" name="bwi-external-link"></bit-icon>
         </button>
       </bit-item>
     </bit-section>

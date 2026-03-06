@@ -12,6 +12,8 @@ const config: StorybookConfig = {
     "../libs/dirt/card/src/**/*.stories.@(js|jsx|ts|tsx)",
     "../libs/pricing/src/**/*.mdx",
     "../libs/pricing/src/**/*.stories.@(js|jsx|ts|tsx)",
+    "../libs/subscription/src/**/*.mdx",
+    "../libs/subscription/src/**/*.stories.@(js|jsx|ts|tsx)",
     "../libs/tools/send/send-ui/src/**/*.mdx",
     "../libs/tools/send/send-ui/src/**/*.stories.@(js|jsx|ts|tsx)",
     "../libs/vault/src/**/*.mdx",
@@ -67,6 +69,34 @@ const config: StorybookConfig = {
   },
   docs: {},
   staticDirs: ["../apps/web/src/images"],
+  refs: (config, { configType }) => {
+    if (configType === "PRODUCTION") {
+      const branchName = process.env.STORYBOOK_BRANCH_NAME;
+
+      return {
+        autofill: {
+          title: `Autofill Components (branch: ${branchName})`,
+          url: `https://${branchName}--695ffc4bef53d3a5ae4c8067.chromatic.com`,
+        },
+      };
+    }
+
+    // Only use storybook composition if we're running the script for both storybooks
+    if (process.env.STORYBOOK_DEV === "combined") {
+      return {
+        autofill: {
+          title: "Autofill Components",
+          url: "http://localhost:6007",
+        },
+      };
+    }
+
+    return {
+      autofill: {
+        disable: true,
+      },
+    };
+  },
 };
 
 export default config;
